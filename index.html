@@ -100,6 +100,51 @@
   }
   .stopbar.show{display:block}
   footer{text-align:center;font-size:11px;color:#7a6850;padding:20px 0 8px}
+  /* ===== 首页 ===== */
+  .hero{
+    text-align:center;margin:18px 0 8px;
+    background:linear-gradient(160deg,#4a3826,#34281c);
+    border:1px solid var(--line);border-radius:22px;
+    padding:22px 18px 20px;box-shadow:0 6px 20px rgba(0,0,0,.3);
+  }
+  .hero h2{
+    margin:0 0 4px;font-size:23px;font-weight:900;color:var(--gold);
+    letter-spacing:1px;text-shadow:0 2px 0 rgba(0,0,0,.25);
+  }
+  .hero .en{font-size:12px;color:var(--coral);letter-spacing:3px;margin:0 0 14px;font-weight:700}
+  .hero svg{width:100%;max-width:340px;height:auto;display:block;margin:0 auto}
+  .hero .welcome{font-size:13.5px;color:var(--sub);margin:14px 6px 0;line-height:1.8}
+  .mapwrap{
+    background:var(--card);border:1px solid var(--line);border-radius:20px;
+    padding:18px 14px 16px;margin:16px 0;box-shadow:0 4px 14px rgba(0,0,0,.25);
+  }
+  .mapwrap .mt{font-size:16px;font-weight:800;color:var(--gold);margin:0 0 2px;text-align:center}
+  .mapwrap .ms{font-size:12px;color:var(--coral);text-align:center;margin:0 0 14px;font-weight:600}
+  .mapsvg{width:100%;height:auto;display:block}
+  .mapsvg text{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+  .loc-list{margin:16px 0 4px;padding:0;list-style:none}
+  .loc-list li{
+    display:flex;gap:11px;align-items:flex-start;
+    padding:11px 12px;margin-bottom:9px;
+    background:rgba(231,184,90,.08);border:1px solid rgba(231,184,90,.22);
+    border-radius:13px;cursor:pointer;transition:background .15s;
+  }
+  .loc-list li:active{background:rgba(224,83,63,.16)}
+  .loc-list .num{
+    flex:none;width:26px;height:26px;border-radius:50%;
+    background:linear-gradient(135deg,var(--coral),#c8442f);color:#fff;
+    font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:1px;
+  }
+  .loc-list .lc h4{margin:0 0 2px;font-size:14.5px;font-weight:800;color:var(--cream)}
+  .loc-list .lc p{margin:0;font-size:12.5px;color:var(--sub);line-height:1.6}
+  .loc-list .lc .pos{color:#f0dca8;font-weight:600}
+  .startbtn{
+    display:block;width:100%;text-align:center;text-decoration:none;
+    background:linear-gradient(135deg,var(--coral),#c8442f);color:#fff;
+    font-size:16px;font-weight:800;padding:15px;border-radius:14px;
+    margin:18px 0 6px;box-shadow:0 5px 16px rgba(224,83,63,.35);
+  }
+  .startbtn:active{transform:scale(.98)}
 </style>
 </head>
 <body>
@@ -110,6 +155,102 @@
 
 <div class="wrap">
   <div class="warn">📵 西斯廷礼拜堂内禁止拍照与大声说话，请戴耳机收听，把音量调小。本导览已缓存，馆内无网络也能用。</div>
+
+  <!-- ===== 首页 ===== -->
+  <section class="hero" id="home">
+    <h2>欢迎光临梵蒂冈博物馆</h2>
+    <p class="en">MUSEI VATICANI · 中文语音导览</p>
+    <svg viewBox="0 0 340 210" xmlns="http://www.w3.org/2000/svg" aria-label="圣彼得大教堂">
+      <!-- 角落装饰云 -->
+      <ellipse cx="34" cy="26" rx="22" ry="7" fill="#e0533f" opacity=".18"/>
+      <ellipse cx="305" cy="22" rx="20" ry="6" fill="#e7b85a" opacity=".22"/>
+      <!-- 穹顶 -->
+      <path d="M134 116 Q134 70 170 65 Q206 70 206 116 Z" fill="#e7b85a" stroke="#2b2118" stroke-width="3.5" stroke-linejoin="round"/>
+      <path d="M156 116 Q156 82 170 79 Q184 82 184 116 Z" fill="#e0533f" opacity=".5" stroke="#2b2118" stroke-width="2"/>
+      <!-- 顶部灯笼塔 -->
+      <rect x="163" y="52" width="14" height="15" rx="2.5" fill="#f4ecdd" stroke="#2b2118" stroke-width="2.5"/>
+      <circle cx="170" cy="47" r="4" fill="#e7b85a" stroke="#2b2118" stroke-width="2.5"/>
+      <line x1="170" y1="43" x2="170" y2="37" stroke="#2b2118" stroke-width="2.5"/>
+      <!-- 鼓座 -->
+      <rect x="130" y="114" width="80" height="13" rx="2.5" fill="#f4ecdd" stroke="#2b2118" stroke-width="3"/>
+      <!-- 立面（加宽加高，压住穹顶重量） -->
+      <rect x="56" y="127" width="228" height="62" rx="4" fill="#f4ecdd" stroke="#2b2118" stroke-width="3.5"/>
+      <line x1="88" y1="131" x2="88" y2="185" stroke="#2b2118" stroke-width="2.5"/>
+      <line x1="120" y1="131" x2="120" y2="185" stroke="#2b2118" stroke-width="2.5"/>
+      <line x1="220" y1="131" x2="220" y2="185" stroke="#2b2118" stroke-width="2.5"/>
+      <line x1="252" y1="131" x2="252" y2="185" stroke="#2b2118" stroke-width="2.5"/>
+      <rect x="155" y="142" width="30" height="47" rx="3" fill="#e0533f" opacity=".45" stroke="#2b2118" stroke-width="2.5"/>
+      <rect x="132" y="155" width="16" height="34" rx="2.5" fill="#e7b85a" opacity=".4" stroke="#2b2118" stroke-width="2.5"/>
+      <rect x="192" y="155" width="16" height="34" rx="2.5" fill="#e7b85a" opacity=".4" stroke="#2b2118" stroke-width="2.5"/>
+      <!-- 柱廊环抱 -->
+      <path d="M30 189 Q30 165 58 162 L56 162 L56 189 Z" fill="#3a2e22" stroke="#2b2118" stroke-width="2.5"/>
+      <path d="M310 189 Q310 165 282 162 L284 162 L284 189 Z" fill="#3a2e22" stroke="#2b2118" stroke-width="2.5"/>
+      <!-- 地面波浪 -->
+      <path d="M0 196 Q85 190 170 196 T340 196" fill="none" stroke="#e0533f" stroke-width="4" stroke-linecap="round"/>
+      <path d="M0 204 Q85 198 170 204 T340 204" fill="none" stroke="#e7b85a" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+    </svg>
+    <p class="welcome">这里是天主教世界的艺术心脏，收藏跨越四千年。<br>这份导览会牵着您，沿馆方设计的标准动线，一个厅一个厅走完所有镇馆之宝。</p>
+  </section>
+
+  <!-- ===== 参观地图 ===== -->
+  <div class="mapwrap">
+    <p class="mt">🗺️ 参观动线图</p>
+    <p class="ms">跟着红色路线走，顺序就是最佳参观顺序</p>
+    <svg class="mapsvg" viewBox="0 0 340 470" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr" markerWidth="9" markerHeight="9" refX="5" refY="4.5" orient="auto">
+          <path d="M0 0 L9 4.5 L0 9 Z" fill="#e0533f"/>
+        </marker>
+      </defs>
+      <!-- 入口 -->
+      <rect x="14" y="14" width="92" height="34" rx="9" fill="#52412f" stroke="#e7b85a" stroke-width="2"/>
+      <text x="60" y="35" text-anchor="middle" font-size="13" font-weight="800" fill="#e7b85a">🚪 入口 · 螺旋梯</text>
+      <!-- 路线 -->
+      <path d="M60 48 L60 78" stroke="#e0533f" stroke-width="3.5" fill="none" marker-end="url(#arr)"/>
+      <!-- 1 -->
+      <rect x="14" y="80" width="150" height="40" rx="11" fill="#3a2e22" stroke="#e0533f" stroke-width="2.5"/>
+      <circle cx="34" cy="100" r="12" fill="#e0533f"/><text x="34" y="105" text-anchor="middle" font-size="14" font-weight="800" fill="#fff">1</text>
+      <text x="52" y="96" font-size="12.5" font-weight="800" fill="#f4ecdd">庇护-克莱孟博物馆</text>
+      <text x="52" y="111" font-size="10.5" fill="#c9b89b">古典雕塑 · 拉奥孔</text>
+      <path d="M164 100 L200 100 L200 134" stroke="#e0533f" stroke-width="3.5" fill="none" marker-end="url(#arr)"/>
+      <!-- 2 -->
+      <rect x="176" y="136" width="150" height="40" rx="11" fill="#3a2e22" stroke="#e0533f" stroke-width="2.5"/>
+      <circle cx="196" cy="156" r="12" fill="#e0533f"/><text x="196" y="161" text-anchor="middle" font-size="14" font-weight="800" fill="#fff">2</text>
+      <text x="214" y="152" font-size="12.5" font-weight="800" fill="#f4ecdd">三条华丽长廊</text>
+      <text x="214" y="167" font-size="10.5" fill="#c9b89b">烛台 · 挂毯 · 地图廊</text>
+      <path d="M251 176 L251 196 L140 196 L140 218" stroke="#e0533f" stroke-width="3.5" fill="none" marker-end="url(#arr)"/>
+      <!-- 3 -->
+      <rect x="14" y="220" width="150" height="40" rx="11" fill="#3a2e22" stroke="#e0533f" stroke-width="2.5"/>
+      <circle cx="34" cy="240" r="12" fill="#e0533f"/><text x="34" y="245" text-anchor="middle" font-size="14" font-weight="800" fill="#fff">3</text>
+      <text x="52" y="236" font-size="12.5" font-weight="800" fill="#f4ecdd">拉斐尔房间</text>
+      <text x="52" y="251" font-size="10.5" fill="#c9b89b">雅典学院</text>
+      <path d="M164 240 L200 240 L200 274" stroke="#e0533f" stroke-width="3.5" fill="none" marker-end="url(#arr)"/>
+      <!-- 4 -->
+      <rect x="176" y="276" width="150" height="40" rx="11" fill="#3a2e22" stroke="#e0533f" stroke-width="2.5"/>
+      <circle cx="196" cy="296" r="12" fill="#e0533f"/><text x="196" y="301" text-anchor="middle" font-size="14" font-weight="800" fill="#fff">4</text>
+      <text x="214" y="292" font-size="12.5" font-weight="800" fill="#f4ecdd">波吉亚寓所</text>
+      <text x="214" y="307" font-size="10.5" fill="#c9b89b">通往现代宗教艺术</text>
+      <path d="M251 316 L251 336 L140 336 L140 358" stroke="#e0533f" stroke-width="3.5" fill="none" marker-end="url(#arr)"/>
+      <!-- 5 -->
+      <rect x="14" y="360" width="150" height="42" rx="11" fill="#4a2018" stroke="#e7b85a" stroke-width="2.8"/>
+      <circle cx="34" cy="381" r="12" fill="#e7b85a"/><text x="34" y="386" text-anchor="middle" font-size="14" font-weight="800" fill="#2b2118">5</text>
+      <text x="52" y="377" font-size="12.5" font-weight="800" fill="#e7b85a">★ 西斯廷礼拜堂</text>
+      <text x="52" y="392" font-size="10.5" fill="#f0dca8">米开朗基罗 · 全程高潮</text>
+      <path d="M164 381 L200 381 L200 414" stroke="#e0533f" stroke-width="3.5" fill="none" marker-end="url(#arr)"/>
+      <!-- 6 -->
+      <rect x="176" y="416" width="150" height="40" rx="11" fill="#3a2e22" stroke="#e0533f" stroke-width="2.5"/>
+      <circle cx="196" cy="436" r="12" fill="#e0533f"/><text x="196" y="441" text-anchor="middle" font-size="14" font-weight="800" fill="#fff">6</text>
+      <text x="214" y="432" font-size="12.5" font-weight="800" fill="#f4ecdd">绘画馆 Pinacoteca</text>
+      <text x="214" y="447" font-size="10.5" fill="#c9b89b">出口前 · 三件油画</text>
+    </svg>
+    <p class="ms" style="margin-top:12px">出博物馆后，强烈建议顺道走进 ⑦ 圣彼得大教堂</p>
+  </div>
+
+  <!-- ===== 各厅位置说明 ===== -->
+  <ul class="loc-list" id="locList"></ul>
+
+  <a class="startbtn" href="#start">▶ 从第一厅开始导览</a>
+
   <div id="app"></div>
   <footer>内容为参观导览参考 · 图片来自 Wikimedia Commons 公共版权<br>清和乐章 · 为王宁老师定制</footer>
 </div>
@@ -123,8 +264,10 @@ const app=document.getElementById('app');
 const nav=document.getElementById('nav');
 const stopbar=document.getElementById('stopbar');
 let curBtn=null;
+const audio=new Audio();
+audio.preload='none';
 
-// 选中文嗓音
+// 备用：浏览器内置中文嗓音（仅当预录音频缺失时）
 let zhVoice=null;
 function pickVoice(){
   const vs=speechSynthesis.getVoices();
@@ -135,29 +278,66 @@ function pickVoice(){
 pickVoice();
 speechSynthesis.onvoiceschanged=pickVoice;
 
-function stopAll(){
-  speechSynthesis.cancel();
+function resetBtn(){
   if(curBtn){curBtn.classList.remove('playing');curBtn.querySelector('.lbl').textContent='▶ 播放语音讲解';curBtn.querySelector('.icn').textContent='🔊';}
   curBtn=null; stopbar.classList.remove('show');
 }
-
-function speak(text,btn){
-  if(curBtn===btn){stopAll();return;}
-  stopAll();
-  const u=new SpeechSynthesisUtterance(text);
-  u.lang='zh-CN'; u.rate=0.95; u.pitch=1.0;
-  if(zhVoice)u.voice=zhVoice;
-  u.onend=()=>{stopAll();};
-  u.onerror=()=>{stopAll();};
+function stopAll(){
+  speechSynthesis.cancel();
+  audio.pause(); audio.removeAttribute('src');
+  resetBtn();
+}
+function markPlaying(btn){
   curBtn=btn;
   btn.classList.add('playing');
   btn.querySelector('.lbl').textContent='⏸ 正在播放（点击停止）';
   btn.querySelector('.icn').textContent='🎙️';
   stopbar.classList.add('show');
+}
+
+function speak(id,text,btn){
+  if(curBtn===btn){stopAll();return;}
+  stopAll();
+  markPlaying(btn);
+  // 首选：陈栩宁预录音频（语速1.0，离线缓存）
+  audio.src='audio/'+id+'.mp3';
+  audio.onended=()=>stopAll();
+  audio.onerror=()=>fallbackTTS(text);
+  const p=audio.play();
+  if(p&&p.catch)p.catch(()=>fallbackTTS(text));
+}
+function fallbackTTS(text){
+  // 音频缺失时退回浏览器内置TTS
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang='zh-CN'; u.rate=1.0; u.pitch=1.0;
+  if(zhVoice)u.voice=zhVoice;
+  u.onend=()=>stopAll(); u.onerror=()=>stopAll();
   speechSynthesis.speak(u);
 }
 
+// 各厅在馆内的真实位置说明
+const LOC=[
+ {p:'进馆登顶螺旋梯后第一个大区',d:'从入口顺人流上行，穿过埃及馆即到，是古典雕塑的核心区，八角庭院里就是拉奥孔。'},
+ {p:'雕塑馆之后的三条平行长廊',d:'依次走过烛台廊、挂毯廊、地图廊，一路向拉斐尔房间方向延伸，长廊尽头即是。'},
+ {p:'长廊尽头、西斯廷之前',d:'拉斐尔房间在二层，紧接地图廊，是进入西斯廷前必经的文艺复兴绘画高潮。'},
+ {p:'拉斐尔房间隔壁',d:'波吉亚寓所在拉斐尔房间下行一侧，连着现代宗教艺术馆，往前就是西斯廷入口。'},
+ {p:'全程最深处 · 动线终点前',d:'顺指示牌“Cappella Sistina”一直走到底，这里是整个参观的最高潮，看完从侧门离开。'},
+ {p:'出主馆后、出口附近',d:'绘画馆（油画馆）是独立一栋，常被赶时间的人错过，却藏着拉斐尔与卡拉瓦乔的镇馆油画。'},
+ {p:'走出博物馆后顺道',d:'圣彼得大教堂不在博物馆内，但出馆步行几分钟即达，强烈建议接着看完。'}
+];
+const locList=document.getElementById('locList');
 GUIDE.halls.forEach((hall,hi)=>{
+  const loc=LOC[hi]||{p:'',d:hall.intro};
+  const li=document.createElement('li');
+  li.innerHTML=`<span class="num">${hi+1}</span>
+    <div class="lc"><h4>${hall.name}</h4>
+    <p><span class="pos">📍 ${loc.p}</span><br>${loc.d}</p></div>`;
+  li.addEventListener('click',()=>{location.hash='#'+hall.id;});
+  locList.appendChild(li);
+});
+
+GUIDE.halls.forEach((hall,hi)=>{
+  if(hi===0) app.insertAdjacentHTML('beforeend','<span id="start"></span>');
   const sec=document.createElement('section');
   sec.className='hall'; sec.id=hall.id;
   sec.innerHTML=`<div class="hall-head">
@@ -179,7 +359,7 @@ GUIDE.halls.forEach((hall,hi)=>{
         <div class="script">${w.script}</div>
       </div>`;
     const btn=card.querySelector('.play');
-    btn.addEventListener('click',()=>speak(w.script,btn));
+    btn.addEventListener('click',()=>speak(w.id,w.script,btn));
     const tg=card.querySelector('.toggle');
     const sc=card.querySelector('.script');
     tg.addEventListener('click',()=>sc.classList.toggle('open'));

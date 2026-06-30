@@ -1,0 +1,13 @@
+{
+  "name": "梵蒂冈博物馆中文导览",
+  "short_name": "梵蒂冈导览",
+  "description": "梵蒂冈博物馆各厅中文语音导览，点击作品即听讲解，离线可用",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#2b2118",
+  "theme_color": "#2b2118",
+  "lang": "zh-CN",
+  "icons": [
+    { "src": "icon.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

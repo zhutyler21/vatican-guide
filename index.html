@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#2b2118">
+<title>梵蒂冈博物馆 · 中文导览</title>
+<link rel="manifest" href="manifest.json">
+<style>
+  :root{
+    --bg:#2b2118; --card:#3a2e22; --cream:#f4ecdd; --coral:#e0533f;
+    --gold:#e7b85a; --ink:#f4ecdd; --sub:#c9b89b; --line:#52412f;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.7;
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  header{
+    position:sticky; top:0; z-index:50; background:rgba(43,33,24,.96);
+    backdrop-filter:blur(8px); border-bottom:1px solid var(--line);
+    padding:calc(env(safe-area-inset-top) + 12px) 16px 12px;
+  }
+  header h1{margin:0;font-size:18px;font-weight:800;letter-spacing:.5px}
+  header .tip{margin:3px 0 0;font-size:12px;color:var(--sub)}
+  .wrap{max-width:680px;margin:0 auto;padding:0 14px}
+  .hall{margin:22px 0}
+  .hall-head{
+    background:linear-gradient(135deg,#4a3826,#3a2e22);
+    border:1px solid var(--line); border-left:5px solid var(--coral);
+    border-radius:16px; padding:14px 16px; margin-bottom:14px;
+  }
+  .hall-head h2{margin:0;font-size:17px;color:var(--gold);font-weight:800}
+  .hall-head .sub{font-size:12px;color:var(--coral);margin:3px 0 6px;font-weight:600}
+  .hall-head .intro{font-size:13.5px;color:var(--sub);margin:0}
+  .work{
+    background:var(--card); border:1px solid var(--line);
+    border-radius:18px; overflow:hidden; margin-bottom:14px;
+    box-shadow:0 4px 14px rgba(0,0,0,.25);
+  }
+  .work img{width:100%;display:block;background:#1c150e;min-height:120px;object-fit:cover}
+  .work .body{padding:13px 15px 15px}
+  .work h3{margin:0 0 2px;font-size:16px;font-weight:800}
+  .work .artist{font-size:12px;color:var(--gold);margin:0 0 9px}
+  .look{
+    display:flex;gap:8px;align-items:flex-start;
+    background:rgba(231,184,90,.12); border:1px solid rgba(231,184,90,.3);
+    border-radius:12px; padding:9px 11px; margin-bottom:11px;
+  }
+  .look .ic{flex:none;font-size:15px;line-height:1.5}
+  .look .tx{font-size:13px;color:#f0dca8}
+  .play{
+    display:flex;align-items:center;justify-content:center;gap:9px;
+    width:100%;border:none;cursor:pointer;
+    background:linear-gradient(135deg,var(--coral),#c8442f);
+    color:#fff;font-size:15.5px;font-weight:800;
+    padding:13px;border-radius:13px;font-family:inherit;
+    transition:transform .08s,filter .2s;
+  }
+  .play:active{transform:scale(.97)}
+  .play.playing{background:linear-gradient(135deg,#3f7d5a,#2f6347)}
+  .play .icn{font-size:18px}
+  .script{
+    font-size:14px;color:#e6dcc8;margin:11px 2px 0;
+    max-height:0;overflow:hidden;transition:max-height .35s ease;
+  }
+  .script.open{max-height:1400px}
+  .toggle{
+    background:none;border:none;color:var(--sub);font-size:12.5px;
+    margin-top:8px;cursor:pointer;font-family:inherit;text-decoration:underline;
+  }
+  .nav{
+    position:sticky;bottom:0;z-index:40;display:flex;gap:6px;overflow-x:auto;
+    background:rgba(43,33,24,.97);backdrop-filter:blur(8px);
+    border-top:1px solid var(--line);padding:8px 10px;
+    padding-bottom:calc(env(safe-area-inset-bottom) + 8px);
+    -webkit-overflow-scrolling:touch;scrollbar-width:none;
+  }
+  .nav::-webkit-scrollbar{display:none}
+  .nav a{
+    flex:none;font-size:12px;color:var(--sub);text-decoration:none;
+    background:var(--card);border:1px solid var(--line);
+    padding:6px 11px;border-radius:20px;white-space:nowrap;
+  }
+  .nav a:active{color:var(--gold);border-color:var(--coral)}
+  .warn{
+    background:rgba(224,83,63,.12);border:1px solid rgba(224,83,63,.35);
+    border-radius:12px;padding:10px 13px;margin:14px 0;font-size:12.5px;color:#f3c4ba;
+  }
+  .stopbar{
+    position:fixed;left:50%;transform:translateX(-50%);
+    bottom:calc(env(safe-area-inset-bottom) + 58px);z-index:60;
+    background:#1c150e;border:1px solid var(--coral);color:#fff;
+    padding:9px 18px;border-radius:30px;font-size:13px;font-weight:700;
+    box-shadow:0 6px 18px rgba(0,0,0,.5);display:none;cursor:pointer;
+  }
+  .stopbar.show{display:block}
+  footer{text-align:center;font-size:11px;color:#7a6850;padding:20px 0 8px}
+</style>
+</head>
+<body>
+<header>
+  <h1>🏛️ 梵蒂冈博物馆 · 中文导览</h1>
+  <p class="tip">进每个厅，按"往哪看"找到作品 → 点红色按钮听讲解</p>
+</header>
+
+<div class="wrap">
+  <div class="warn">📵 西斯廷礼拜堂内禁止拍照与大声说话，请戴耳机收听，把音量调小。本导览已缓存，馆内无网络也能用。</div>
+  <div id="app"></div>
+  <footer>内容为参观导览参考 · 图片来自 Wikimedia Commons 公共版权<br>清和乐章 · 为王宁老师定制</footer>
+</div>
+
+<nav class="nav" id="nav"></nav>
+<div class="stopbar" id="stopbar" onclick="stopAll()">⏹ 停止播放</div>
+
+<script src="data.js"></script>
+<script>
+const app=document.getElementById('app');
+const nav=document.getElementById('nav');
+const stopbar=document.getElementById('stopbar');
+let curBtn=null;
+
+// 选中文嗓音
+let zhVoice=null;
+function pickVoice(){
+  const vs=speechSynthesis.getVoices();
+  zhVoice=vs.find(v=>/zh[-_]CN/i.test(v.lang)&&/Tingting|Mei|Yu|Female/i.test(v.name))
+       || vs.find(v=>/zh[-_]CN/i.test(v.lang))
+       || vs.find(v=>/^zh/i.test(v.lang))||null;
+}
+pickVoice();
+speechSynthesis.onvoiceschanged=pickVoice;
+
+function stopAll(){
+  speechSynthesis.cancel();
+  if(curBtn){curBtn.classList.remove('playing');curBtn.querySelector('.lbl').textContent='▶ 播放语音讲解';curBtn.querySelector('.icn').textContent='🔊';}
+  curBtn=null; stopbar.classList.remove('show');
+}
+
+function speak(text,btn){
+  if(curBtn===btn){stopAll();return;}
+  stopAll();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang='zh-CN'; u.rate=0.95; u.pitch=1.0;
+  if(zhVoice)u.voice=zhVoice;
+  u.onend=()=>{stopAll();};
+  u.onerror=()=>{stopAll();};
+  curBtn=btn;
+  btn.classList.add('playing');
+  btn.querySelector('.lbl').textContent='⏸ 正在播放（点击停止）';
+  btn.querySelector('.icn').textContent='🎙️';
+  stopbar.classList.add('show');
+  speechSynthesis.speak(u);
+}
+
+GUIDE.halls.forEach((hall,hi)=>{
+  const sec=document.createElement('section');
+  sec.className='hall'; sec.id=hall.id;
+  sec.innerHTML=`<div class="hall-head">
+    <h2>${hi+1}. ${hall.name}</h2>
+    <div class="sub">${hall.subtitle}</div>
+    <p class="intro">${hall.intro}</p></div>`;
+  hall.works.forEach(w=>{
+    const card=document.createElement('div');
+    card.className='work';
+    card.innerHTML=`
+      <img src="images/${w.id}.jpg" alt="${w.title}" loading="lazy"
+           onerror="this.onerror=null;this.src='images/${w.id}.png'">
+      <div class="body">
+        <h3>${w.title}</h3>
+        <p class="artist">${w.artist}</p>
+        <div class="look"><span class="ic">👀</span><span class="tx"><b>往哪看：</b>${w.look}</span></div>
+        <button class="play"><span class="icn">🔊</span><span class="lbl">▶ 播放语音讲解</span></button>
+        <button class="toggle">显示/隐藏讲解文字</button>
+        <div class="script">${w.script}</div>
+      </div>`;
+    const btn=card.querySelector('.play');
+    btn.addEventListener('click',()=>speak(w.script,btn));
+    const tg=card.querySelector('.toggle');
+    const sc=card.querySelector('.script');
+    tg.addEventListener('click',()=>sc.classList.toggle('open'));
+    sec.appendChild(card);
+  });
+  app.appendChild(sec);
+  const a=document.createElement('a');
+  a.href='#'+hall.id; a.textContent=hall.name.replace(/（.*）/,'');
+  nav.appendChild(a);
+});
+
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
+</script>
+</body>
+</html>

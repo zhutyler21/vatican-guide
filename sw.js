@@ -1,4 +1,4 @@
-const CACHE='vatican-guide-v2';
+const CACHE='vatican-guide-v3';
 const ASSETS=[
   './','./index.html','./data.js','./manifest.json','./icon.png',
   'images/laocoon.jpg','images/apollo_belvedere.jpg','images/belvedere_torso.jpg',

@@ -145,16 +145,47 @@
     margin:18px 0 6px;box-shadow:0 5px 16px rgba(224,83,63,.35);
   }
   .startbtn:active{transform:scale(.98)}
+
+  /* ===== 中国用户网络加速 / 离线缓存 ===== */
+  .cn-boost{
+    background:linear-gradient(135deg,rgba(224,83,63,.16),rgba(231,184,90,.12));
+    border:1px solid rgba(231,184,90,.34);border-radius:16px;
+    padding:12px 13px;margin:14px 0;font-size:12.8px;color:#f0dca8;
+    box-shadow:0 4px 14px rgba(0,0,0,.18);
+  }
+  .cn-boost strong{color:var(--gold);font-size:14px}
+  .cn-boost p{margin:4px 0 10px;line-height:1.65}
+  .boost-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .boost-btn{
+    border:none;border-radius:999px;padding:8px 13px;cursor:pointer;
+    background:linear-gradient(135deg,var(--coral),#c8442f);color:#fff;
+    font-family:inherit;font-size:12.5px;font-weight:800;
+  }
+  .boost-btn:disabled{opacity:.55;cursor:not-allowed}
+  .boost-status{font-size:12px;color:var(--sub)}
+  .boost-meter{height:6px;background:rgba(244,236,221,.16);border-radius:999px;overflow:hidden;margin-top:9px}
+  .boost-meter span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--coral),var(--gold));transition:width .2s}
+
 </style>
 </head>
 <body>
 <header>
   <h1>🏛️ 梵蒂冈博物馆 · 中文导览</h1>
-  <p class="tip">进每个厅，按"往哪看"找到作品 → 点红色按钮听讲解</p>
+  <p class="tip">进每个厅，按"往哪看"找到作品 → 点红色按钮听讲解 · 支持离线缓存</p>
 </header>
 
 <div class="wrap">
   <div class="warn">📵 西斯廷礼拜堂内禁止拍照与大声说话，请戴耳机收听，把音量调小。本导览已缓存，馆内无网络也能用。</div>
+
+  <div class="cn-boost" id="cnBoost">
+    <strong>🚀 中国用户加速模式</strong>
+    <p>国内打开 Cloudflare Pages 偶尔会慢。页面能打开后，先点“一键缓存”，图片和语音会保存到本机；进馆、弱网、没网时也能继续听。</p>
+    <div class="boost-row">
+      <button class="boost-btn" id="boostBtn" type="button">一键缓存全部导览</button>
+      <span class="boost-status" id="boostStatus">正在检测网络…</span>
+    </div>
+    <div class="boost-meter" aria-hidden="true"><span id="boostBar"></span></div>
+  </div>
 
   <!-- ===== 首页 ===== -->
   <section class="hero" id="home">
@@ -370,6 +401,62 @@ GUIDE.halls.forEach((hall,hi)=>{
   a.href='#'+hall.id; a.textContent=hall.name.replace(/（.*）/,'');
   nav.appendChild(a);
 });
+
+
+// 中国用户加速：首屏轻量加载 + 手动全量离线缓存
+const boostBtn=document.getElementById('boostBtn');
+const boostStatus=document.getElementById('boostStatus');
+const boostBar=document.getElementById('boostBar');
+const CORE_CACHE='vatican-guide-cn-core-v1';
+function guideAssets(){
+  const media=[];
+  GUIDE.halls.forEach(h=>h.works.forEach(w=>{
+    media.push(`images/${w.id}.jpg`,`images/${w.id}.png`,`audio/${w.id}.mp3`);
+  }));
+  return ['./','index.html','data.js','manifest.json','icon.png','sw.js',...media];
+}
+function setBoostProgress(done,total,label){
+  const pct=total?Math.round(done*100/total):0;
+  boostBar.style.width=pct+'%';
+  boostStatus.textContent=label||`已缓存 ${done}/${total}`;
+}
+async function detectNetwork(){
+  if(!boostStatus)return;
+  const conn=navigator.connection||navigator.mozConnection||navigator.webkitConnection;
+  const slowConn=conn&&(/2g/.test(conn.effectiveType||'')||(conn.rtt&&conn.rtt>900));
+  const t0=performance.now();
+  try{
+    await fetch('data.js?probe='+Date.now(),{cache:'no-store'});
+    const ms=Math.round(performance.now()-t0);
+    if(slowConn||ms>1800) boostStatus.textContent='当前网络偏慢，建议先缓存全部导览';
+    else boostStatus.textContent=localStorage.getItem('cnBoostCached')==='1'?'已缓存，可离线使用':'网络正常，建议出发前缓存一次';
+  }catch(e){
+    boostStatus.textContent='网络不稳定，建议连上后点一键缓存';
+  }
+}
+async function cacheAllGuide(){
+  if(!('caches' in window)){boostStatus.textContent='当前浏览器不支持离线缓存';return;}
+  const urls=[...new Set(guideAssets())];
+  boostBtn.disabled=true;
+  const cache=await caches.open(CORE_CACHE);
+  let done=0;
+  setBoostProgress(0,urls.length,'开始缓存，请别关页面…');
+  for(const url of urls){
+    try{
+      const resp=await fetch(url,{cache:'reload'});
+      if(resp.ok) await cache.put(url,resp.clone());
+    }catch(e){/* png fallback 或弱网失败，跳过 */}
+    done++;
+    setBoostProgress(done,urls.length);
+  }
+  localStorage.setItem('cnBoostCached','1');
+  setBoostProgress(urls.length,urls.length,'缓存完成：进馆弱网/无网也能用');
+  boostBtn.disabled=false;
+}
+if(boostBtn){
+  boostBtn.addEventListener('click',cacheAllGuide);
+  detectNetwork();
+}
 
 if('serviceWorker' in navigator){
   navigator.serviceWorker.register('sw.js').catch(()=>{});

@@ -12,7 +12,8 @@ os.chdir(COSY_ROOT)
 sys.path.insert(0, str(COSY_ROOT))
 sys.path.insert(0, str(COSY_ROOT / 'third_party/Matcha-TTS'))
 
-PROJ = Path('/Users/zhutyler21/Downloads/Hermes/wangning/05-代码/20260630-vatican-guide-app')
+# 本项目独立运行：沿用梵蒂冈已有的陈栩宁参考音色。
+PROJ = Path(__file__).resolve().parent
 AUDIO = PROJ / 'audio'
 TMP = PROJ / '_tts_tmp'
 AUDIO.mkdir(exist_ok=True)
@@ -23,7 +24,15 @@ REF_TXT = '小时候住在一座小城里，所以也没有机器的声音。春
 PROMPT_TEXT = 'You are a helpful assistant.<|endofprompt|>' + REF_TXT
 FFMPEG = '/opt/homebrew/bin/ffmpeg'
 
-works = json.loads((PROJ / 'scripts_manifest.json').read_text())
+# 直接从 data.js 读取三处景点的讲解文稿；已有 MP3 会被跳过，避免覆盖原音频。
+node_code = """
+const fs=require('fs'),vm=require('vm');
+vm.runInThisContext(fs.readFileSync('data.js','utf8'));
+const works=Object.values(GUIDES).flatMap(g=>g.halls.flatMap(h=>h.works))
+  .map(w=>({id:w.id,text:w.script}));
+process.stdout.write(JSON.stringify(works));
+"""
+works = json.loads(subprocess.check_output(['node', '-e', node_code], cwd=PROJ, text=True))
 
 import torchaudio
 from cosyvoice.cli.cosyvoice import AutoModel

@@ -1,4 +1,5 @@
-const CACHE='italy-guide-v6';
+// v7：斗兽场节点图片改为版本化文件名，安装时清除旧的 v6 图片/数据缓存。
+const CACHE='italy-guide-v7';
 const CORE=['./','./index.html','./data.js','./manifest.json','./icon.png','./images/placeholder.svg'];
 self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(CACHE).then(c=>Promise.all(CORE.map(u=>c.add(u).catch(()=>null)))))});
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE&&!k.startsWith('italy-guide-manual-')).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));

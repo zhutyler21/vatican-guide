@@ -114,6 +114,7 @@ http://localhost:8000
 ├── manifest.json              # PWA 配置
 ├── icon.png                   # 应用图标
 ├── images/                    # 景点图片
+├── audio/                     # 静音隐私占位文件，不是讲解音频
 ├── fetch_commons_images.py    # Wikimedia Commons 图片获取辅助脚本
 ├── _headers                   # Cloudflare Pages 缓存响应头
 ├── CHINA_ACCELERATION.md      # 中国大陆网络与部署说明
@@ -182,6 +183,8 @@ git push origin feature/add-new-place
 ## 隐私与安全
 
 本仓库只保留公开导览所需的代码、文字和图片，不应包含私人联系方式、本机路径、语音参考样本或可识别个人身份的音频。语音讲解默认使用访问者设备自带的 Web Speech API，不分发真人预录音频。
+
+`audio/` 中的 MP3 均为 0.25 秒静音隐私占位文件，只用于覆盖历史 CDN 缓存里的同名旧资源；前端不会把它们当作讲解音频使用。请不要用真人录音或声音克隆文件替换这些占位文件。
 
 如果发现遗漏的个人信息或素材授权问题，请直接提交 Issue；涉及敏感信息时，请不要在公开 Issue 中粘贴原始数据。
 

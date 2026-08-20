@@ -1,0 +1,23 @@
+# macOS / editors
+.DS_Store
+.idea/
+.vscode/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# Secrets and local config
+.env
+.env.*
+
+# Personal voice samples and generated audio must not be committed
+_tts_tmp/
+audio/
+*.wav
+*.mp3
+
+# Local logs and temporary files
+*.log
+*.tmp
